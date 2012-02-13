@@ -1,0 +1,13 @@
+{
+  "name": "waiter",
+  "description": "A simple way to wait for multiple asynchronous calls to return",
+  "version": "0.1.1",
+  "homepage": "https://github.com/marcello3d/node-waiter",
+  "repository": "git://github.com/marcello3d/node-waiter.git",
+  "author": "Marcello Bastéa-Forte <marcello@cellosoft.com> (http://marcello.cellosoft.com/)",
+  "main": "waiter.js",
+  "keywords": ["async","parallel","flow","asynchronous","flow-control","parallel"],
+  "engines": {
+    "node": ">=0.4.0"
+  }
+}

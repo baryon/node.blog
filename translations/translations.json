@@ -1,0 +1,34 @@
+{
+    "New post": {
+        "ja": "新規",
+        "zh": "新帖"
+    },
+    "Sign out": {
+        "ja": "サインアウト",
+        "zh": "登出"
+    },
+    "Sign in": {
+        "ja": "サインイン",
+        "zh": "登入"
+    },
+    "Syntax documentation" : {
+        "ja": "文法",
+        "zh": "语法"
+    },
+    "Cancel" : {
+        "ja": "キャンセル",
+        "zh": "取消"
+    },
+    "Save changes" : {
+        "ja": "保存",
+        "zh": "保存"
+    },
+    "Publish post" : {
+        "ja": "公開",
+        "zh": "发表"
+    },
+    "Archive" : {
+        "ja": "アーカイブ",
+        "zh": "归档"
+    }
+}

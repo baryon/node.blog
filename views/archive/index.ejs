@@ -1,0 +1,10 @@
+<%- head %>
+
+  <ul class="archive">
+    <% entries.forEach(function(entry){ %>
+       <li>
+        <div class="title"><a href="/entry/<%= entry.slug %>"><%= entry.title %></a></div>
+        <div class="date"><%= entry.published %></div>
+      </li>
+    <% }) %>
+  </ul>

@@ -1,0 +1,6 @@
+	<% entries.forEach(function(entry){ %>
+		<%- partial('partials/entry', {entry:entry}) %>
+	<% }) %>
+<div>
+    <a href="/archive"><%= _("Archive") %></a>
+</div>

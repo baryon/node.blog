@@ -1,0 +1,19 @@
+<form action="/compose" method="post" class="compose">
+    <div style="margin-bottom:5px">
+        <input name="title" type="text" class="title" value="<%= entry ? entry.title : '' %>"/>
+    </div>
+    <div style="margin-bottom:5px">
+        <textarea name="markdown" rows="30" cols="40" class="markdown"><%= entry? entry.markdown : '' %></textarea>
+    </div>
+    <div>
+        <div style="float:right">
+            <a href="http://daringfireball.net/projects/markdown/syntax"><%= _("Syntax documentation") %></a>
+        </div>
+        <input type="submit" value="<%= entry ? _("Save changes") : _("Publish post") %>" class="submit"/>
+        &nbsp;<a href="<%= entry ? "/entry/" + entry.slug : "/" %>"><%= _("Cancel") %></a>
+    </div>
+    <% if (entry) { %>
+    <input type="hidden" name="id" value="<%= entry? entry._id : '' %>" />
+<% } %>
+<input type="hidden" name="_csrf" value="<%= token %>" >
+</form>

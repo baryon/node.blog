@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+    <title><%= site.blog_title %></title>
+    <link rel="stylesheet" href="/stylesheets/blog.css" type="text/css"/>
+    <link rel="alternate" href="/feed" type="application/atom+xml" title="<%= site.blog_title %>"/>
+    <%- head %>
+  </head>
+  <body>
+    <div id="body">
+      <div id="header">
+        <div style="float:right">
+          <% if (everyauth.loggedIn) { %>
+          	<img src="https://secure.gravatar.com/avatar/<%= everyauth.github.user.gravatar_id %>" style=" height: 16px;" />
+          	<%= everyauth.github.user.login %>
+            <a href="/compose"><%= _("New post") %></a> -
+            <a href="/auth/logout" ><%= _("Sign out") %></a>
+          <% } else { %>
+            <a href="/auth/login"><%= _("Sign in") %></a> to compose/edit
+          <% } %>
+        </div>
+        <h1><a href="/"><%= site.blog_title %></a></h1>
+      </div>
+      <div id="content"><%- body %></div>
+       <%- partial('partials/footer') %>
+    </div>
+    <%- bottom %>
+  </body>
+</html>
