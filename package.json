@@ -5,5 +5,11 @@
   , "dependencies": {
       "express": "2.5.2"
     , "ejs": ">= 0.0.1"
+    , "opts": ">= 1.2.2"
+    , "everyauth": ">= 0.2.30"
+    , "mongolian": ">= 0.1.17"
+    , "marked": ">= 0.1.9"
+    , "localize": ">= 0.4.3"
+    , "fibers": ">= 0.6.4"
   }
 }

@@ -3,6 +3,7 @@
  */
 var Mongolian = require("mongolian")
 var marked = require('marked');
+require('fibers');
 
 // Create a server instance with default host and port
 var mongoserver = new Mongolian;
@@ -42,20 +43,43 @@ exports.entry = function(req, res) {
 	});
 };
 
-exports.archive = function(req, res) {
+// exports.archive = function(req, res) {
+// entries.find().sort( {
+// published : 1
+// }).toArray(function(err, entries) {
+// if (!err && entries) {
+// res.partial('archive/head.ejs', function(err, head) {
+// res.render('archive', {
+// entries : entries,
+// head : head
+// });
+// });
+// } else {
+// res.send(500);
+// }
+// });
+// };
+
+exports.archive = function(req, res, next) {
 	entries.find().sort( {
 		published : 1
 	}).toArray(function(err, entries) {
-		if (!err && entries) {
-			res.partial('archive/head.ejs', function(err, head) {
-				res.render('archive', {
-					entries : entries,
-					head : head
-				});
+		if (err)
+			return next(err);
+
+		var head = Fiber(function(view, options) {
+			res.partial(view, options, function(err, head) {
+				if (err)
+					return next(err);
+				yield(head);
 			});
-		} else {
-			res.send(500);
-		}
+		}).run('archive/head.ejs');
+
+		res.render('archive', {
+			entries : entries,
+			head : head
+		});
+
 	});
 };
 
