@@ -104,23 +104,32 @@ exports.composeIndex = function(req, res) {
 		entries.findOne( {
 			_id : new Mongolian.ObjectId(id)
 		}, function(err, entry) {
-			if (!err && entry) {
-				res.partial('compose/bottom.ejs', function(err, bottom) {
-					res.render('compose', {
-						entry : entry,
-						bottom : bottom
-					});
-				});
-			} else {
-				res.send(500);
-			}
-		});
-	} else {
-		res.partial('compose/bottom.ejs', function(err, bottom) {
+			if (err)
+				return next(err, 500);
 			res.render('compose', {
-				entry : null,
-				bottom : bottom
+				entry : entry,
+				bottom : 'compose/bottom.ejs'
 			});
+			// if (!err && entry) {
+				// res.partial('compose/bottom.ejs', function(err, bottom) {
+				// res.render('compose', {
+				// entry : entry,
+				// bottom : bottom
+				// });
+				// });
+				// } else {
+				// res.send(500);
+				// }
+			});
+	} else {
+		// res.partial('compose/bottom.ejs', function(err, bottom) {
+		// res.render('compose', {
+		// entry : null,
+		// bottom : bottom
+		// });
+		res.render('compose', {
+			entry : null,
+			bottom : 'compose/bottom.ejs'
 		});
 	}
 };

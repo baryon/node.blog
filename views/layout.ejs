@@ -17,14 +17,15 @@
             <a href="/compose"><%= _("New post") %></a> -
             <a href="/auth/logout" ><%= _("Sign out") %></a>
           <% } else { %>
-            <a href="/auth/login"><%= _("Sign in") %></a> to compose/edit
+            <a href="/auth/login"><%= _("Sign in") %></a> to compose/edit.
           <% } %>
+          See <a href="/doc/index.md">doc</a>
         </div>
         <h1><a href="/"><%= site.blog_title %></a></h1>
       </div>
       <div id="content"><%- body %></div>
        <%- partial('partials/footer') %>
     </div>
-    <%- bottom %>
+    <%- partial(bottom) %>
   </body>
 </html>

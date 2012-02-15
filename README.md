@@ -18,12 +18,12 @@ https://github.com/bnoguchi/everyauth
 Mongolian DeadBeef:an awesome Mongo DB node.js driver that attempts to closely approximate the mongodb shell
 https://github.com/marcello3d/node-mongolian
 
-marked : A full-featured markdown parser and compiler. Built for speed.
+marked : A full-featured markdown parser and compiler. Built for speed.  
 https://github.com/chjj/marked
 
-node-localize:provides a GNU gettext-inspired (but not conformant) translation utility for Node.js 
+node-localize:provides a GNU gettext-inspired (but not conformant) translation utility for Node.js  
 https://github.com/AGROSICA/node-localize
 
 
-fibers(1) -- Fiber support for v8 and Node. only for mac, linux, not winodws
+fibers(1) -- Fiber support for v8 and Node. only for mac, linux, not winodws  
 https://github.com/laverdet/node-fibers

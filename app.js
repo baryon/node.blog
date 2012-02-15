@@ -3,7 +3,9 @@
  */
 
 var express = require('express'), ejs = require('ejs'), routes = require('./routes'), util = require('util');
-var everyauth = require('everyauth'), opts = require('opts')
+var everyauth = require('everyauth'), opts = require('opts');
+var marked = require('marked');
+
 var Localize = require('localize');
 var Mongolian = require("mongolian")
 // Create a server instance with default host and port
@@ -139,7 +141,7 @@ app.helpers( {
 		blog_title : 'node blog'
 	},
 	head : '',
-	bottom : '',
+	bottom : 'partials/empty.ejs',
 	_ : localize.translate,
 	localDate : localize.localDate,
 	strings : localize.strings
@@ -166,6 +168,7 @@ ejs.filters.trim = function(obj) {
 
 app.get(/^\/$|^\/(compose$|archive$|entry\/.+)/ig, function(req, res, next) {
 	everyauth.github.redirectPath(req.url);
+	//res.local('bottom', 'partials/empty.ejs');
 	next();
 });
 
@@ -175,6 +178,24 @@ app.get("/feed", routes.feed);
 app.get("/entry/:slug", routes.entry);
 app.get("/compose", authenticated, routes.composeIndex);
 app.post("/compose", authenticated, routes.compose);
+
+app.register('.md', {
+	  compile: function(str, options){
+	    var html = marked(str);
+	    return function(locals){
+	    	return html;
+	    };
+	  }
+	});
+app.get('/doc/:title.md', function(req, res, next) {
+    var path = [
+        '../doc/',
+        req.params.title, '.md'
+    ].join('');
+    
+    console.log(path);
+    res.render(path, {layout: 'layout_doc.ejs'});
+});
 
 everyauth.helpExpress(app);
 
