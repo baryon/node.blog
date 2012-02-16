@@ -7,13 +7,13 @@
     </div>
     <div>
         <div style="float:right">
-            <a href="http://daringfireball.net/projects/markdown/syntax"><%= _("Syntax documentation") %></a>
+            <a href="http://daringfireball.net/projects/markdown/syntax"><%= __("Syntax documentation") %></a>
         </div>
-        <input type="submit" value="<%= entry ? _("Save changes") : _("Publish post") %>" class="submit"/>
-        &nbsp;<a href="<%= entry ? "/entry/" + entry.slug : "/" %>"><%= _("Cancel") %></a>
+        <input type="submit" value="<%= entry ? __("Save changes") : __("Publish post") %>" class="submit"/>
+        &nbsp;<a href="<%= entry ? "/entry/" + entry.slug : "/" %>"><%= __("Cancel") %></a>
     </div>
     <% if (entry) { %>
     <input type="hidden" name="id" value="<%= entry? entry._id : '' %>" />
 <% } %>
-<input type="hidden" name="_csrf" value="<%= token %>" >
+<%- csrf_form_html %>
 </form>

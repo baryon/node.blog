@@ -1,8 +1,8 @@
 <div class="entry">
   <h1><a href="/entry/<%= entry.slug %>"><%= entry.title %></a></h1>
-  <div class="date"><%= localDate(entry.published, "default") %></div>
+  <div class="date"><%= dateFormat(entry.published) %></div>
   <div class="body"><%- entry.html %></div>
-  <% if (everyauth.loggedIn) {  %>
+  <% if (user) {  %>
     <div class="admin"><a href="/compose?id=<%= entry._id %>">Edit this post</a></div>
   <% } %>
 </div>

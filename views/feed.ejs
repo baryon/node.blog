@@ -2,9 +2,9 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title><%= site.blog_title %></title>
   <% if(entries.length > 0) { %>
-    <updated><%= localDate(entries[0].published, "isoDateTime") %></updated>
+    <updated><%= dateFormat(entries[0].published, "isoDateTime") %></updated>
   <% } else { %>
-    <updated><%= localDate(new Date, "isoDateTime") %></updated>
+    <updated><%= dateFormat(new Date, "isoDateTime") %></updated>
   <% } %>
   <id>http://<%= host %>/</id>
   <link rel="alternate" href="http://<%= host %>/" title="<%= site.blog_title %>" type="text/html"/>
@@ -15,8 +15,8 @@
       <id>http://<%= host %>/entry/<%= entry.slug %></id>
       <title type="text"><%= entry.title %></title>
       <link href="http://<%= host %>/entry/<%= entry.slug %>" rel="alternate" type="text/html"/>
-      <updated><%= localDate(entry.updated, "isoDateTime") %></updated>
-      <published><%= localDate(entry.published, "isoDateTime") %></published>
+      <updated><%= dateFormat(entry.updated, "isoDateTime") %></updated>
+      <published><%= dateFormat(entry.published, "isoDateTime") %></published>
       <content type="xhtml" xml:base="http://<%= host %>/">
         <div xmlns="http://www.w3.org/1999/xhtml"><%= entry.html %></div>
       </content>

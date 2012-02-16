@@ -2,7 +2,7 @@
     <% entries.forEach(function(entry){ %>
        <li>
         <div class="title"><a href="/entry/<%= entry.slug %>"><%= entry.title %></a></div>
-        <div class="date"><%= entry.published %></div>
+        <div class="date"><%= dateFormat(entry.published) %></div>
       </li>
     <% }) %>
   </ul>

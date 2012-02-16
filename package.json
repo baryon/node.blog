@@ -1,15 +1,21 @@
 {
-    "name": "node.blog"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.5.2"
-    , "ejs": ">= 0.0.1"
-    , "opts": ">= 1.2.2"
-    , "everyauth": ">= 0.2.30"
-    , "mongolian": ">= 0.1.17"
-    , "marked": ">= 0.1.9"
-    , "localize": ">= 0.4.3"
-    , "fibers": ">= 0.6.4"
-  }
+	"name": "node.blog",
+	"description": "A blog example for node.js, using express, ejs, auth, localize, markdown",
+	"maintainers": "LI Long <lilong@gmail.com>",
+	"homepage": "https://github.com/baryon/node.blog",
+	"author": "LI Long",
+	"version": "0.0.1",
+	"private": false,
+	"dependencies": {
+		"express": "2.5.2",
+		"ejs": ">= 0.0.1",
+		"opts": ">= 1.2.2",
+		"passport": ">= 0.1.0",
+		"passport-github": ">= 0.1.0",
+		"mongolian": ">= 0.1.17",
+		"marked": ">= 0.1.9",
+		"i18n": ">= 0.3.0",
+		"dateformat": ">= 1.0.2",
+		"fibers": ">= 0.6.4"
+	}
 }

@@ -1,7 +1,7 @@
 /*
  * node.blog 
  */
-var Mongolian = require("mongolian")
+var Mongolian = require("mongolian");
 var marked = require('marked');
 require('fibers');
 
@@ -9,12 +9,12 @@ require('fibers');
 var mongoserver = new Mongolian;
 
 // Get database
-var db = mongoserver.db("nodeblog")
-var entries = db.collection("entries")
+var db = mongoserver.db("nodeblog");
+var entries = db.collection("entries");
 
 exports.home = function(req, res) {
 	entries.find().limit(5).sort( {
-		published : 1
+		published : -1
 	}).toArray(function(err, entries) {
 		if (!err && entries) {
 			res.render('home', {
@@ -28,7 +28,7 @@ exports.home = function(req, res) {
 	});
 };
 
-exports.entry = function(req, res) {
+exports.entry = function(req, res, next) {
 	var slug = req.params.slug;
 	entries.findOne( {
 		slug : slug
@@ -38,7 +38,8 @@ exports.entry = function(req, res) {
 				entry : entry
 			});
 		} else {
-			res.send(500);
+			console.error(err);
+			next(500);
 		}
 	});
 };
@@ -62,11 +63,12 @@ exports.entry = function(req, res) {
 
 exports.archive = function(req, res, next) {
 	entries.find().sort( {
-		published : 1
+		published : -1
 	}).toArray(function(err, entries) {
-		if (err)
-			return next(err);
-
+		if (err) {
+			console.error(err);
+			next(500);
+		}
 		var head = Fiber(function(view, options) {
 			res.partial(view, options, function(err, head) {
 				if (err)
@@ -83,9 +85,9 @@ exports.archive = function(req, res, next) {
 	});
 };
 
-exports.feed = function(req, res) {
+exports.feed = function(req, res, next) {
 	entries.find().limit(10).sort( {
-		published : 1
+		published : -1
 	}).toArray(function(err, entries) {
 		if (!err && entries) {
 			res.render('feed', {
@@ -93,19 +95,22 @@ exports.feed = function(req, res) {
 				entries : entries
 			});
 		} else {
-			res.send(500);
+			console.error(err);
+			next(500);
 		}
 	});
 };
 
-exports.composeIndex = function(req, res) {
+exports.composeIndex = function(req, res, next) {
 	var id = req.param('id');
 	if (id) {
 		entries.findOne( {
 			_id : new Mongolian.ObjectId(id)
 		}, function(err, entry) {
-			if (err)
-				return next(err, 500);
+			if (err) {
+				console.error(err);
+				next(500);
+			}
 			res.render('compose', {
 				entry : entry,
 				bottom : 'compose/bottom.ejs'
@@ -134,7 +139,7 @@ exports.composeIndex = function(req, res) {
 	}
 };
 
-exports.compose = function(req, res) {
+exports.compose = function(req, res, next) {
 	var id = req.param('id');
 	var title = req.param('title');
 	var text = req.param('markdown');
@@ -152,7 +157,8 @@ exports.compose = function(req, res) {
 				entries.save(entry);
 				res.redirect("/entry/" + entry.slug);
 			} else {
-				res.send(500);
+				console.error(err);
+				next(500);
 			}
 		});
 	} else {
@@ -179,7 +185,8 @@ exports.compose = function(req, res) {
 						if (!err && entry) {
 							res.redirect("/entry/" + slug);
 						} else {
-							res.send(500);
+							console.error(err);
+							next(500);
 						}
 					});
 				}

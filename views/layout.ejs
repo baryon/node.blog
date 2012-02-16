@@ -11,13 +11,13 @@
     <div id="body">
       <div id="header">
         <div style="float:right">
-          <% if (everyauth.loggedIn) { %>
-          	<img src="https://secure.gravatar.com/avatar/<%= everyauth.github.user.gravatar_id %>" style=" height: 16px;" />
-          	<%= everyauth.github.user.login %>
-            <a href="/compose"><%= _("New post") %></a> -
-            <a href="/auth/logout" ><%= _("Sign out") %></a>
+          <% if (user) { %>
+          	<img src="<%= user.avatar_url %>" style=" height: 16px;" />
+          	<%= user.displayName ? user.displayName: user.username %>
+            <a href="/compose"><%= __("New post") %></a> -
+            <a href="/logout" ><%= __("Sign out") %></a>
           <% } else { %>
-            <a href="/auth/login"><%= _("Sign in") %></a> to compose/edit.
+            <a href="/auth/github"><%= __("Sign in") %></a> to compose/edit.
           <% } %>
           See <a href="/doc/index.md">doc</a>
         </div>

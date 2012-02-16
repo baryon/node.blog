@@ -5,15 +5,24 @@ aaaa
 aaaa
  
 ###2.方案选择###	 
-啊啊啊啊
+[everyauth](https://github.com/bnoguchi/everyauth)
+[passport](http://passportjs.org/)
 
 ###3.操作步骤###	   
 啊啊啊
 
 ###4.思考和讨论###	 
-啊啊啊
+[passport](http://passportjs.org/)
+真是一个好库,完全解决了认证的问题
+它基于策略,可以方便的支持各种登陆方案,即使是已经存在的策略也有方便的修改方案.
+超酷
+好后悔浪费在everyauth上的大量时间
+
+everyauth的实现基于了函数的链表风格,一个一个函数链接下去，可惜在满是异步调用的node里不是好的方案.
+everyauth在异步处理上使用Promise， 这不是一个好的方案,我们不知道这个Promie什么时候被填充,特别是在异常的情况下,我们没法返回一个友好的界面给用户.
+而passport基于策略模式可以很好的解决这些问题。可能策略同异步没有太大关系，但他确实管用
  
-everyauth是非常让人恼火的库,对于出错的处理没有好的机制,我虽然可以捕捉到异常但是无法抛给客户端定制化的页面
+[everyauth](https://github.com/bnoguchi/everyauth)是非常让人恼火的库,对于出错的处理没有好的机制,我虽然可以捕捉到异常但是无法抛给客户端定制化的页面
 主要发生在异步填充用户数据上。 大段代码都是处理认证问题, 但是仍然不令人满意
 
 	var everyauth = require('everyauth')
