@@ -28,3 +28,7 @@ https://github.com/felixge/node-dateformat
 
 fibers(1) -- Fiber support for v8 and Node. only for mac, linux, not winodws  
 https://github.com/laverdet/node-fibers
+
+Step  
+A simple control-flow library for node.JS that makes parallel execution, serial execution, and error handling painless.  
+https://github.com/creationix/step

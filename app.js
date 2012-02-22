@@ -51,7 +51,7 @@ var conf = {
     }
 };
 
-var administors = ['baryona'];
+var administors = ['baryon'];
 
 GitHubStrategy.prototype.userProfile = function (accessToken, done) {
     this._oauth2.getProtectedResource('https://api.github.com/user', accessToken, function (err, body, res) {
@@ -269,6 +269,5 @@ app.get('/doc/:title.md', function (req, res, next) {
     });
 });
 
-
 app.listen(port);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+//console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

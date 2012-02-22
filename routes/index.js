@@ -3,7 +3,7 @@
  */
 var Mongolian = require("mongolian");
 var marked = require('marked');
-require('fibers');
+var Step = require('step');
 
 // Create a server instance with default host and port
 var mongoserver = new Mongolian;
@@ -45,44 +45,66 @@ exports.entry = function(req, res, next) {
 };
 
 // exports.archive = function(req, res) {
-// entries.find().sort( {
-// published : 1
-// }).toArray(function(err, entries) {
-// if (!err && entries) {
-// res.partial('archive/head.ejs', function(err, head) {
-// res.render('archive', {
-// entries : entries,
-// head : head
-// });
-// });
-// } else {
-// res.send(500);
-// }
-// });
-// };
+//	entries.find().sort( {
+//		published : 1
+//	}).toArray(function(err, entries) {
+//		if (!err && entries) {
+//			res.partial('archive/head.ejs', function(err, head) {
+//				res.render('archive', {
+//					entries : entries,
+//					head : head
+//				});
+//			});
+//		} else {
+//			res.send(500);
+//		}
+//	});
+//};
+
+//require('fibers');
+//exports.archive = function(req, res, next) {
+//	entries.find().sort( {
+//		published : -1
+//	}).toArray(function(err, entries) {
+//		if (err) {
+//			console.error(err);
+//			next(500);
+//		}
+//		var head = Fiber(function(view, options) {
+//			res.partial(view, options, function(err, head) {
+//				if (err)
+//					return next(err);
+//				yield(head);
+//			});
+//		}).run('archive/head.ejs');
+//
+//		res.render('archive', {
+//			entries : entries,
+//			head : head
+//		});
+//
+//	});
+//};
 
 exports.archive = function(req, res, next) {
-	entries.find().sort( {
-		published : -1
-	}).toArray(function(err, entries) {
-		if (err) {
-			console.error(err);
-			next(500);
-		}
-		var head = Fiber(function(view, options) {
-			res.partial(view, options, function(err, head) {
-				if (err)
-					return next(err);
-				yield(head);
-			});
-		}).run('archive/head.ejs');
+	Step(
+	function partial() {
+		entries.find().sort( {
+			published : -1
+		}).toArray(this.parallel());
 
+		res.partial('archive/head.ejs', this.parallel());
+	},
+
+	function(err, entries, head) {
+		if (err)
+			return next(err);
 		res.render('archive', {
 			entries : entries,
 			head : head
 		});
-
-	});
+	}
+	);
 };
 
 exports.feed = function(req, res, next) {
