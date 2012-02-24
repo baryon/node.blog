@@ -3,7 +3,6 @@
  */
 var Mongolian = require("mongolian");
 var marked = require('marked');
-var Step = require('step');
 
 // Create a server instance with default host and port
 var mongoserver = new Mongolian;
@@ -44,68 +43,32 @@ exports.entry = function(req, res, next) {
 	});
 };
 
-// exports.archive = function(req, res) {
-//	entries.find().sort( {
-//		published : 1
-//	}).toArray(function(err, entries) {
-//		if (!err && entries) {
-//			res.partial('archive/head.ejs', function(err, head) {
-//				res.render('archive', {
-//					entries : entries,
-//					head : head
-//				});
-//			});
-//		} else {
-//			res.send(500);
-//		}
-//	});
-//};
 
-//require('fibers');
-//exports.archive = function(req, res, next) {
-//	entries.find().sort( {
-//		published : -1
-//	}).toArray(function(err, entries) {
-//		if (err) {
-//			console.error(err);
-//			next(500);
-//		}
-//		var head = Fiber(function(view, options) {
-//			res.partial(view, options, function(err, head) {
-//				if (err)
-//					return next(err);
-//				yield(head);
-//			});
-//		}).run('archive/head.ejs');
-//
-//		res.render('archive', {
-//			entries : entries,
-//			head : head
-//		});
-//
-//	});
-//};
 
+var async = require('async');
 exports.archive = function(req, res, next) {
-	Step(
-	function partial() {
-		entries.find().sort( {
-			published : -1
-		}).toArray(this.parallel());
-
-		res.partial('archive/head.ejs', this.parallel());
+	async.parallel({
+		posts: function(callback){
+			entries.find().sort( {
+				published : -1
+			}).toArray(callback);
+		},
+		head: function(callback){
+			res.partial('archive/head.ejs', callback);
+		}
 	},
 
-	function(err, entries, head) {
+	function(err, results) {
 		if (err)
 			return next(err);
 		res.render('archive', {
-			entries : entries,
-			head : head
+			entries : results.posts,
+			head : results.head
 		});
 	}
 	);
 };
+
 
 exports.feed = function(req, res, next) {
 	entries.find().limit(10).sort( {
